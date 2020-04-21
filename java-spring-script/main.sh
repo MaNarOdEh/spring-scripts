@@ -9,14 +9,14 @@ display_help(){
     echo "                      controller";
     echo ;
     echo "Usage NameSpace [repository,entity,service]";
+    echo "entity,e:    --name,-n name of the entity";
+    echo "             --parameter_number,-c number of parameter";
+    echo "             list all your parameter as type name";
+    echo "";
     echo "repository,r: --name,-n name of the repository ";
     echo "              --type,-t type of the repository [by default jbaRepository";
     echo "              <T1,T2> type of first genric,second";
     echo "                [ by default <name,UUID] >";
-    echo "";
-    echo "entity,e:    --name,-n name of the entity";
-    echo "             --parameter_number,-c number of parameter";
-    echo "             list all your parameter as type name";
     echo "";
     echo "controller,c:  --name,-n name of the controller";
     echo "";
@@ -24,25 +24,59 @@ display_help(){
     echo;
     exit 1
 }
+#this method recieve two arguments
+#the first one represent the parameters name
+#the second is represent the name
+#this methods will create entity,repository,service,controller
 create_all(){
-if [ -z "${1}" -o "$1" != "--name" -a "${1}" != "-n" ]
-then
-   echo "Error!";
-   display_help
-   
-fi
+    if [ -z "${1}" -o "$1" != "--name" -a "${1}" != "-n" ]
+    then
+       echo "Error!";
+       display_help
+       
+    fi
 
-if [ -z "$2" ]
-then
-    echo "No passing argument";
-    display_help
-fi
-./script/create-model.sh $2 0
-./script/create-repository.sh $2
-./script/create-controller.sh $2
-./script/create-service.sh $2
-exit 1;
-
+    if [ -z "$2" ]
+    then
+        echo "No passing argument";
+        display_help
+    fi
+    ./script/create-model.sh $2 0
+    ./script/create-repository.sh $2
+    ./script/create-controller.sh $2
+    ./script/create-service.sh $2
+    exit 1;
+}
+create_entity(){
+    if [ -z "${1}" -o "$1" != "--name" -a "${1}" != "-n" ]
+    then
+       echo "Error! ";
+       display_help
+       
+    fi
+    
+    if [ -z "$2" ]
+    then
+        echo "No passing argument";
+        display_help
+    fi
+    
+    if [ -z "$3"  -o "$3" != "--parameter_number" -a "${3}" != "-c" ]
+    then
+        echo "Error!";
+        display_help
+    fi
+    
+    if [ -z "$4" ]
+    then
+        echo "No passing argument";
+        display_help
+    fi
+    name=$2;
+    count=$4;
+    shift 4;
+    ./script/create-model.sh $name $count "$@";
+    exit 1;
 }
 # print help messages
 CONTROLLER_FOLDER="controller";
@@ -62,9 +96,9 @@ case "$commands" in
  "-all") create_all $2 $3 ;;
  "--create_all") create_all $2 $3 ;;
  #case 4
- "repository") echo "--name here" ;;
+ "entity") shift 1; create_entity "$@" ;;
  #case 5
- "r") echo "repoistory name space" ;;
+ "e") shift 1 ;create_entity "$@" ;;
  
  esac
 
