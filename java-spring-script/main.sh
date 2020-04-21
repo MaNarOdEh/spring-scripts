@@ -115,6 +115,23 @@ create_controller(){
 
     exit 1;
 }
+create_service(){
+    if [ -z "${1}" -o "$1" != "--name" -a "${1}" != "-n" ]
+    then
+       echo "Error! ";
+       display_help
+       
+    fi
+
+    if [ -z "$2" ]
+    then
+        echo "No passing argument";
+        display_help
+    fi
+    ./script/create-service.sh $2
+
+    exit 1;
+}
 # print help messages
 CONTROLLER_FOLDER="controller";
 REPOSITORY_FOLDER="repository";
@@ -145,9 +162,9 @@ case "$commands" in
  #case 9
  "c") create_controller $2 $3;;
  #case 10
- "service") echo "service";;
+ "service") create_service $2 $3;;
  #case 11
- "s") echo "ss";;
+ "s") create_service $2 $3;;
  esac
 
 #./script/create-controller.sh movie
