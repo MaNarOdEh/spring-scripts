@@ -3,7 +3,6 @@
 #varaibels
 
 action_name=$1;
-action_type_count=$2;
 #create store folder
 mkdir -p store
 
@@ -18,7 +17,7 @@ echo 'import { Action } from "@ngrx/store";' >> $action_dir;
 
 #create EnumTypes
 echo "export enum E${action_name}Types {"  >> $action_dir;
-shift 2;
+shift 1;
 for var in "$@"
 do
     echo "  \"${var}\" = \"[${var} Page] ${var}\", ">> $action_dir;
