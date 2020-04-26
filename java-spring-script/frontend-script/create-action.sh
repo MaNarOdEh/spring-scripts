@@ -5,10 +5,12 @@
 action_name=$1;
 #create store folder
 mkdir -p store
+cd store;
+mkdir -p action;
 
 #change first char from capital to small
 action_name=$(tr A-Z a-z <<< ${action_name:0:1})${action_name:1};
-action_dir=store/${action_name}.action.ts;
+action_dir=action/${action_name}.action.ts;
 test -f ${action_dir} || touch ${action_dir};
 action_name=$(tr a-z A-Z <<< ${action_name:0:1})${action_name:1};
 
@@ -17,7 +19,7 @@ echo 'import { Action } from "@ngrx/store";' >> $action_dir;
 
 #create EnumTypes
 echo "export enum E${action_name}Types {"  >> $action_dir;
-shift 1;
+shift 2;
 for var in "$@"
 do
     echo "  \"${var}\" = \"[${var} Page] ${var}\", ">> $action_dir;

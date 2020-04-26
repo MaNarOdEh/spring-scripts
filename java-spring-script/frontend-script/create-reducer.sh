@@ -3,10 +3,14 @@
 #varaibels
 reducer_name=$1;
 #create store folder
-mkdir -p store
+mkdir -p store;
+
+cd store;
+mkdir -p reducer;
+
 #change first char from capital to small
 reducer_name=$(tr A-Z a-z <<< ${reducer_name:0:1})${reducer_name:1};
-reducer_dir=store/${reducer_name}.reducer.ts;
+reducer_dir=reducer/${reducer_name}.reducer.ts;
 test -f ${reducer_dir} || touch ${reducer_dir};
 
 echo 'import { State } from "@ngrx/store";' >> ${reducer_dir};

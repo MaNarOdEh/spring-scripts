@@ -5,9 +5,11 @@
 effect_name=$1;
 #create store folder
 mkdir -p store
+cd store;
+mkdir -p effect;
 #change first char from capital to small
 effect_name=$(tr A-Z a-z <<< ${effect_name:0:1})${effect_name:1};
-effect_dir=store/${effect_name}.effects.ts;
+effect_dir=effect/${effect_name}.effects.ts;
 test -f ${effect_dir} || touch ${effect_dir};
 
 echo 'import { Action } from "@ngrx/store";' >> ${effect_dir};
