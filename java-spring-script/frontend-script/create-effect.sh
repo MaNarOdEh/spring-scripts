@@ -26,7 +26,11 @@ echo "  constructor("  >> ${effect_dir};
 echo "      private actions$: Actions"  >> ${effect_dir};
 echo "  ){}"  >> ${effect_dir};
 echo "  @Effect()"  >> ${effect_dir};
-echo "  connectToService$: Observable<Action> = this.actions$.pipe();" >> ${effect_dir};
+echo "  connectToService$: Observable<Action> = this.actions$.pipe(" >> ${effect_dir};
+echo "      ofType<>()" >> ${effect_dir};
+echo "      mergeMap((actions:${effect_name}Action) => " >> ${effect_dir};
+echo "   )" >> ${effect_dir};
+echo " )" >> ${effect_dir};
 
 echo "}" >> ${effect_dir};
 

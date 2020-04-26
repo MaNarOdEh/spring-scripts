@@ -12,5 +12,9 @@ export class movieEffects {
       private actions$: Actions
   ){}
   @Effect()
-  connectToService$: Observable<Action> = this.actions$.pipe();
+  connectToService$: Observable<Action> = this.actions$.pipe(
+      ofType<>()
+      mergeMap((actions:movieAction) => 
+   )
+ )
 }
